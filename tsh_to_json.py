@@ -68,3 +68,28 @@ def tsh_to_json(path):
             return {}
         
         return players
+    
+def json_to_tsh(data):
+    '''
+    Reverse of tsh_to_json
+    '''
+    output = []
+    
+    for record in data:
+        if record['name'] != 'bye':
+            row = "{0} {1} {2}; {3}; ".format(record['name'], 
+                                                            record['old_rating'],
+                                                            " ".join(record['opponents']), 
+                                                            " ".join(record['scores']))
+            board = record.get('board')
+            if board:
+                row += "board " + " ".join(record.get('board')) + "; "
+                                           
+                                           
+            p12 = record.get('p12')
+            if p12:
+                row += "board " + " ".join(p12) + ";"
+        
+            output.append(row)
+        
+    return output
