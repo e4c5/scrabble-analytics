@@ -1,15 +1,16 @@
+import sys
 import re
+import json
 
 def tsh_to_json(path):
     '''
-    Generated a JSON from a tournament data file
+    Generate a JSON from a tournament data file
     '''
     players = [{'name': 'bye'}]
     rounds = 0;
     with open(path) as f:
         for seed, line in enumerate(f):
             if line and len(line) > 30 :
-           
                 rating = re.search('[0-9]{1,4} ', line).group(0).strip()
                 name = line[0: line.index(rating)].strip()
                 newr = None
@@ -93,3 +94,8 @@ def json_to_tsh(data):
             output.append(row)
         
     return output
+
+if __name__ == '__main__':
+    print(
+        json.dumps(tsh_to_json(sys.argv[1]), indent=2)
+    )
